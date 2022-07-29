@@ -1,0 +1,36 @@
+package com.example.daangn.repository;
+
+import com.example.daangn.dto.PostResultDto;
+import com.example.daangn.model.QPost;
+import com.example.daangn.model.QUser;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@RequiredArgsConstructor
+public class PostRepositoryImpl implements PostRepositoryCustom{
+    private final JPAQueryFactory queryFactory;
+
+    QPost post = QPost.post;
+    QUser user = QUser.user;
+
+    @Override
+    public PostResultDto findByPostId(Long postId) {
+        return (PostResultDto) queryFactory.select(Projections.fields(
+                        PostResultDto.class,
+                        post.title,
+                        post.category,
+                        post.price,
+                        post.area,
+                        post.content,
+                        post.imageUrl,
+                        post.createdAt,
+                        post.user.id
+                ))
+                .from(post)
+                .where(post.user.id.eq(postId))
+                .fetch();
+    }
+}

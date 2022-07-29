@@ -1,5 +1,6 @@
 package com.example.daangn.model;
 
+import com.example.daangn.dto.PostRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,4 +43,24 @@ public class Post extends TimeStamped{
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
+
+    public Post(PostRequestDto requestDto, User user) {
+        this.title = requestDto.getTitle();
+        this.category = requestDto.getCategory();
+        this.price = requestDto.getPrice();
+        this.area = requestDto.getArea();
+        this.content = requestDto.getContent();
+        this.imageUrl = requestDto.getImageUrl();
+        this.state = StateEnum.from("SALE");
+        this.user = user;
+    }
+
+    public void updatePost(PostRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.category = requestDto.getCategory();
+        this.price = requestDto.getPrice();
+        this.area = requestDto.getArea();
+        this.content = requestDto.getContent();
+        this.imageUrl = requestDto.getImageUrl();
+    }
 }
