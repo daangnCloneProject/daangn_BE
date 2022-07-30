@@ -43,5 +43,12 @@ public class PostController {
         return postService.deletePost(postId, userDetails.getUser());
     }
 
+//    @GetMapping("/api/posts")
+//    public ResponseEntity<ResponseDto<?>> allPost(@RequestParam String category,@RequestParam
+//                                                  int page, @RequestParam int size){
+//        return postService.allPosts(category, page, size);
+//
+//    }
+
 
 }

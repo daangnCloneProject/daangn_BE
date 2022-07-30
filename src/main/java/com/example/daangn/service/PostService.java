@@ -9,6 +9,9 @@ import com.example.daangn.repository.PostRepository;
 import com.example.daangn.repository.PostRepositoryImpl;
 import com.example.daangn.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,8 @@ public class PostService {
         this.postRepositoryImpl = postRepositoryImpl;
         this.userRepository = userRepository;
     }
+
+
 
     public ResponseEntity<ResponseDto<?>> createPost(PostRequestDto requestDto, User user) {
         Post post = new Post(requestDto, user);

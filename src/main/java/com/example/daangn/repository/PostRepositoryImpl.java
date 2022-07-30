@@ -1,12 +1,18 @@
 package com.example.daangn.repository;
 
 import com.example.daangn.dto.PostResultDto;
+import com.example.daangn.model.CategoryEnum;
 import com.example.daangn.model.QPost;
 import com.example.daangn.model.QUser;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -33,4 +39,5 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
                 .where(post.user.id.eq(postId))
                 .fetch();
     }
+
 }
