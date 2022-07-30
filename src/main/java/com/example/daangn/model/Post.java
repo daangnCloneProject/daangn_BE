@@ -1,11 +1,14 @@
 package com.example.daangn.model;
 
 import com.example.daangn.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -44,6 +47,9 @@ public class Post extends TimeStamped{
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "post")
+    private List<Like> likeList;
+
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.category = requestDto.getCategory();
@@ -53,6 +59,7 @@ public class Post extends TimeStamped{
         this.imageUrl = requestDto.getImageUrl();
         this.state = StateEnum.from("SALE");
         this.user = user;
+        this.likeList = new ArrayList<>();
     }
 
     public void updatePost(PostRequestDto requestDto) {
@@ -62,20 +69,5 @@ public class Post extends TimeStamped{
         this.area = requestDto.getArea();
         this.content = requestDto.getContent();
         this.imageUrl = requestDto.getImageUrl();
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", category=" + category +
-                ", price=" + price +
-                ", area=" + area +
-                ", content='" + content + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", state=" + state +
-                ", user=" + user +
-                '}';
     }
 }

@@ -45,10 +45,10 @@ public class PostService {
 
 
     public ResponseEntity<ResponseDto<?>> readPost(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 포스트입니다."));
-        System.out.println("here " + post.toString());
-        return new ResponseEntity<>(new ResponseDto<>(true,post), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(
+                true,
+                postRepositoryImpl.findByPostId(postId)
+        ), HttpStatus.OK);
     }
 
 
@@ -73,11 +73,21 @@ public class PostService {
         return new ResponseEntity<>(new ResponseDto<>(true, "게시글 삭제 성공"), HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDto<?>> readMyPosts(String filter, User user) {
+    public ResponseEntity<ResponseDto<?>> readPosts(String category, int page, int size) {
+        System.out.println("here: " +category+", "+page+", "+size);
+        Pageable pageable = PageRequest.of(page,size);
+        return new ResponseEntity<>(new ResponseDto<>(
+                true,
+                postRepositoryImpl.findAllByCategory(category,pageable)
+        ), HttpStatus.OK);
+    }
+
+    public ResponseEntity<ResponseDto<?>> readMyPosts(String filter, User user, int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
         return new ResponseEntity<>(new ResponseDto<>(
                 true,
                 user.getNickname(),
-                postRepositoryImpl.findAllByFilter(filter, user.getId())
+                postRepositoryImpl.findAllByFilter(filter, user.getId(),pageable)
         ),HttpStatus.OK);
     }
 }

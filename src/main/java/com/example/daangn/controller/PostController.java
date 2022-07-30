@@ -19,9 +19,10 @@ public class PostController {
     }
 
     @PostMapping("/api/post")
-    public ResponseEntity<ResponseDto<?>> createPost(@RequestBody PostRequestDto requestDto,
-                                                     @AuthenticationPrincipal UserDetailsImpl userDetails
-    ) {
+    public ResponseEntity<ResponseDto<?>> createPost(
+            @RequestBody PostRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
         return postService.createPost(requestDto, userDetails.getUser());
     }
 
@@ -31,28 +32,38 @@ public class PostController {
     }
 
     @PutMapping("/api/post/{postId}")
-    public ResponseEntity<ResponseDto<?>> editPost(@PathVariable Long postId,
-                         @RequestBody PostRequestDto requestDto,
-                         @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<ResponseDto<?>> editPost(
+            @PathVariable Long postId,
+            @RequestBody PostRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
         return postService.editPost(postId, userDetails.getUser(), requestDto);
     }
 
     @DeleteMapping("/api/post/{postId}")
-    public ResponseEntity<ResponseDto<?>> deletePost(@PathVariable Long postId,
-                           @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<ResponseDto<?>> deletePost(
+            @PathVariable Long postId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
         return postService.deletePost(postId, userDetails.getUser());
     }
 
     @GetMapping("/api/mypost")
-    public ResponseEntity<?> getMyPosts(@RequestParam String filter,
-                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.readMyPosts(filter, userDetails.getUser());
+    public ResponseEntity<?> getMyPosts(
+            @RequestParam String filter,
+            @RequestParam int page,
+            @RequestParam int size,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        return postService.readMyPosts(filter, userDetails.getUser(),page, size);
     }
 
-    //    @GetMapping("/api/posts")
-//    public ResponseEntity<ResponseDto<?>> allPost(@RequestParam String category,@RequestParam
-//                                                  int page, @RequestParam int size){
-//        return postService.allPosts(category, page, size);
-//
-//    }
+    @GetMapping("/api/posts")
+    public ResponseEntity<ResponseDto<?>> readPosts(
+            @RequestParam String category,
+            @RequestParam int page,
+            @RequestParam int size
+    ){
+        return postService.readPosts(category, page, size);
+    }
 }
