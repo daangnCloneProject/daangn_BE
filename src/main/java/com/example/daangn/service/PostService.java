@@ -71,23 +71,6 @@ public class PostService {
     }
 
     public ResponseEntity<?> getMyPosts(String filter, UserDetailsImpl userDetails) {
-        List<PostResultDto> resultDtoList = new ArrayList<>();
-        if (filter.equals("sale")){
-            List<Post> posts = postRepository.findAllByStateAndUserAndOrderByCreatedAt(filter, userDetails.getUser()); // TODO : postrepositoryImpl ??
-            for (Post post : posts) {
-                PostResultDto postResultDto = new PostResultDto(post);
-                resultDtoList.add(postResultDto);
-            }
-            return new ResponseEntity<>(new ResponseDto<>(true, "판매글 불러오기 성공", resultDtoList), HttpStatus.OK);
-        } else if (filter.equals("interest")) {
-            List<Like> likes = likeRepository.findAllByUser(userDetails.getUser());
-            for (Like like : likes) {
-                Post post = postRepository.findById(like.getPost().getId()) // TODO : 이것도 repositoryImpl??
-                        .orElseThrow( () -> new IllegalArgumentException("관심 상품이 존재하지 않습니다."));
-                PostResultDto postResultDto = new PostResultDto(post);
-                resultDtoList.add(postResultDto);
-            }
-            return new ResponseEntity<>(new ResponseDto<>(true, "관심 상품 불러오기 성공", resultDtoList), HttpStatus.OK);
-        } else throw new IllegalArgumentException("잘못된 요청입니다.");
+        List<PostResultDto> resultDtoList = postRepositoryImpl.findAllByPostFilter(filter, userDetails.getUser().getId());
     }
 }

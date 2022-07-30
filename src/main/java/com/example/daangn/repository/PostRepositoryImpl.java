@@ -10,6 +10,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepositoryCustom{
@@ -37,22 +39,22 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     }
 
     @Override
-    public PostResultDto findByPostFilter(String filter, Long userId) {
-        return (PostResultDto) queryFactory.select(Projections.fields(
-                        PostResultDto.class,
-                        post.title,
-                        post.category,
-                        post.price,
-                        post.area,
-                        post.content,
-                        post.imageUrl,
-                        post.createdAt,
-                        post.user.id
-                ))
-                .from(post)
-                .where(post.user.id.eq(userId)) // 판매글
-                .where(categoryContains(filter))
-                .fetch();
+    public List<PostResultDto> findAllByFilterOrUserId(String filter, Long userId) {
+//        return (PostResultDto) queryFactory.select(Projections.fields(
+//                        PostResultDto.class,
+//                        post.title,
+//                        post.category,
+//                        post.price,
+//                        post.area,
+//                        post.content,
+//                        post.imageUrl,
+//                        post.createdAt,
+//                        post.user.id
+//                ))
+//                .from(post)
+//                .where(post.user.id.eq(userId)) // 판매글
+//                .where(categoryContains(filter))
+//                .fetch();
     }
 
     private BooleanExpression categoryContains(String category) {
