@@ -20,9 +20,9 @@ public class ResponseDto<T> {
         this.post = post;
      }
 
-    public ResponseDto(boolean response, String message, List<T> resultDtoList) {
+    public ResponseDto(boolean response, String nickname, List<T> resultDtoList) {
         this.response = response;
-        this.message = message;
+        this.nickname = nickname;
         this.list = resultDtoList;
     }
 }
