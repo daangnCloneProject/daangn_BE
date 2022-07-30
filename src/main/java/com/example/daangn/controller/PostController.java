@@ -43,5 +43,9 @@ public class PostController {
         return postService.deletePost(postId, userDetails.getUser());
     }
 
-
+    @GetMapping("")
+    public ResponseEntity<?> getMyPosts(@RequestParam String filter,
+                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.getMyPosts(filter, userDetails);
+    }
 }
