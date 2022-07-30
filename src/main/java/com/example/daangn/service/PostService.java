@@ -71,6 +71,6 @@ public class PostService {
     }
 
     public ResponseEntity<?> getMyPosts(String filter, UserDetailsImpl userDetails) {
-        List<PostResultDto> resultDtoList = postRepositoryImpl.findAllByPostFilter(filter, userDetails.getUser().getId());
+        List<PostResultDto> resultDtoList = postRepositoryImpl.findAllByFilterOrUserId(filter, userDetails.getUser().getId());
     }
 }
