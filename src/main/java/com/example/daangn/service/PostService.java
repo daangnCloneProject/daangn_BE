@@ -3,11 +3,14 @@ package com.example.daangn.service;
 import com.example.daangn.dto.PostRequestDto;
 import com.example.daangn.dto.PostResultDto;
 import com.example.daangn.dto.ResponseDto;
+import com.example.daangn.model.Like;
 import com.example.daangn.model.Post;
 import com.example.daangn.model.User;
+import com.example.daangn.repository.LikeRepository;
 import com.example.daangn.repository.PostRepository;
 import com.example.daangn.repository.PostRepositoryImpl;
 import com.example.daangn.repository.UserRepository;
+import com.example.daangn.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,12 +28,14 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostRepositoryImpl postRepositoryImpl;
     private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
 
     @Autowired
-    public PostService(PostRepository postRepository, PostRepositoryImpl postRepositoryImpl, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, PostRepositoryImpl postRepositoryImpl, UserRepository userRepository , LikeRepository likeRepository) {
         this.postRepository = postRepository;
         this.postRepositoryImpl = postRepositoryImpl;
         this.userRepository = userRepository;
+        this.likeRepository = likeRepository;
     }
 
 
@@ -66,5 +73,9 @@ public class PostService {
         }
         postRepository.deleteById(postId);
         return new ResponseEntity<>(new ResponseDto<>(true, "게시글 삭제 성공"), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getMyPosts(String filter, UserDetailsImpl userDetails) {
+        List<PostResultDto> resultDtoList = postRepositoryImpl.findAllByFilterOrUserId(filter, userDetails.getUser().getId());
     }
 }

@@ -40,4 +40,26 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
                 .fetch();
     }
 
+    @Override
+    public List<PostResultDto> findAllByFilterOrUserId(String filter, Long userId) {
+        return queryFactory.select(Projections.fields(
+                        PostResultDto.class,
+                        post.title,
+                        post.category,
+                        post.price,
+                        post.area,
+                        post.content,
+                        post.imageUrl,
+                        post.createdAt,
+                        post.user.id
+                ))
+                .from(post)
+                .where(post.user.id.eq(userId)) // 판매글
+                .where(categoryContains(filter))
+                .fetch();
+    }
+
+    private BooleanExpression categoryContains(String category) {
+        return category.equals("ALL") ? null : post.category.eq(CategoryEnum.valueOf(category));
+    }
 }
