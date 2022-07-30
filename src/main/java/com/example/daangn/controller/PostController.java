@@ -48,4 +48,11 @@ public class PostController {
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.readMyPosts(filter, userDetails.getUser());
     }
+
+    //    @GetMapping("/api/posts")
+//    public ResponseEntity<ResponseDto<?>> allPost(@RequestParam String category,@RequestParam
+//                                                  int page, @RequestParam int size){
+//        return postService.allPosts(category, page, size);
+//
+//    }
 }
