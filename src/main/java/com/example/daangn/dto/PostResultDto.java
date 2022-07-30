@@ -2,8 +2,7 @@ package com.example.daangn.dto;
 
 import com.example.daangn.model.AreaEnum;
 import com.example.daangn.model.CategoryEnum;
-import lombok.Getter;
-
+import com.example.daangn.model.StateEnum;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -19,6 +18,8 @@ public class PostResultDto {
     private String content;
 
     private String imageUrl;
+
+    private StateEnum state;
 
     private LocalDateTime after;
 

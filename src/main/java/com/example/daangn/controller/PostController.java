@@ -46,6 +46,13 @@ public class PostController {
     @GetMapping("/api/mypost")
     public ResponseEntity<?> getMyPosts(@RequestParam String filter,
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.getMyPosts(filter, userDetails);
+        return postService.readMyPosts(filter, userDetails.getUser());
     }
+
+    //    @GetMapping("/api/posts")
+//    public ResponseEntity<ResponseDto<?>> allPost(@RequestParam String category,@RequestParam
+//                                                  int page, @RequestParam int size){
+//        return postService.allPosts(category, page, size);
+//
+//    }
 }
