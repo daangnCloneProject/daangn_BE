@@ -1,7 +1,5 @@
 package com.example.daangn.dto;
 
-import com.example.daangn.model.Post;
-
 import java.util.List;
 
 public class ResponseDto<T> {
@@ -10,6 +8,7 @@ public class ResponseDto<T> {
     private String nickname;
     private List<T> list;
     private PostResultDto post;
+
     public ResponseDto (boolean response, String message) {
         this.response = response;
         this.message = message;
@@ -20,4 +19,10 @@ public class ResponseDto<T> {
         this.message = message;
         this.post = post;
      }
+
+    public ResponseDto(boolean response, String message, List<T> resultDtoList) {
+        this.response = response;
+        this.message = message;
+        this.list = resultDtoList;
+    }
 }
