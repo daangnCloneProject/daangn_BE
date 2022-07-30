@@ -30,4 +30,10 @@ public class Room {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
     private List<Message> messageList;
+
+    public Room(Post post, User seller , User user){
+        this.post = post;
+        this.seller = seller;
+        this.buyer = user;
+    }
 }
