@@ -29,7 +29,7 @@ public class MessageController {
         return ResponseEntity.ok().body(messageService.getMessages(roomId, userDetails));
     }
 
-    @MessageMapping(value = {"/message","/pub/message/{roomId}"})
+    @MessageMapping(value = {"/message","/message/{roomId}"})
     public ResponseEntity<?> createMessage(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                            MessageRequestDto messageRequestDto,
                                            @Header("Authorization") String token, @DestinationVariable Long roomId) {

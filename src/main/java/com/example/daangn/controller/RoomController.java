@@ -2,6 +2,7 @@ package com.example.daangn.controller;
 
 
 import com.example.daangn.dto.ResponseDto;
+import com.example.daangn.dto.RoomRequestDto;
 import com.example.daangn.model.User;
 import com.example.daangn.security.UserDetailsImpl;
 import com.example.daangn.service.RoomService;
@@ -34,7 +35,7 @@ public class RoomController {
         return roomService.createRoom(roomRequestDto, userDetails);
     }
 
-    @DeleteMapping("(/api/room/{roomId})")
+    @DeleteMapping("(/room/{roomId})")
     public ResponseEntity<ResponseDto<?>> deleteRoom(@PathVariable Long roomId,
                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
         roomService.deleteRoom(roomId, userDetails);
