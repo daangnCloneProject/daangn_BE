@@ -16,10 +16,11 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
-@Transactional
 public class PostService {
     private final PostRepository postRepository;
     private final PostRepositoryImpl postRepositoryImpl;
@@ -44,9 +45,10 @@ public class PostService {
 
 
     public ResponseEntity<ResponseDto<?>> readPost(Long postId) {
-        PostResultDto post = postRepositoryImpl.findByPostId(postId);
-
-        return new ResponseEntity<>(new ResponseDto<>(true, "게시글 생성 성공", post), HttpStatus.OK);
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 포스트입니다."));
+        System.out.println("here " + post.toString());
+        return new ResponseEntity<>(new ResponseDto<>(true,post), HttpStatus.OK);
     }
 
 

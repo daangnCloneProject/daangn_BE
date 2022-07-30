@@ -3,9 +3,14 @@ package com.example.daangn.dto;
 import com.example.daangn.model.AreaEnum;
 import com.example.daangn.model.CategoryEnum;
 import com.example.daangn.model.StateEnum;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class PostResultDto {
     private String title;
 
@@ -27,6 +32,6 @@ public class PostResultDto {
 
     public Long getAfter() {
         LocalDateTime today = LocalDateTime.now();
-        return Duration.between(today, after).toDays();
+        return Duration.between(after,today).toDays();
     }
 }

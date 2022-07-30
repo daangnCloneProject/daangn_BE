@@ -63,4 +63,19 @@ public class Post extends TimeStamped{
         this.content = requestDto.getContent();
         this.imageUrl = requestDto.getImageUrl();
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", category=" + category +
+                ", price=" + price +
+                ", area=" + area +
+                ", content='" + content + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", state=" + state +
+                ", user=" + user +
+                '}';
+    }
 }
