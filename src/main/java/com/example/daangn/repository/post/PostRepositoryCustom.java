@@ -12,5 +12,5 @@ public interface PostRepositoryCustom {
 
     PostResultDto findByPostId(Long postId);
 
-    Slice<PostResultDto> findAllByKeyword(String area, String titlekeyword, String contentkeyword, Pageable pageable);
+    Slice<PostResultDto> findAllByKeyword(String titlekeyword, String contentkeyword, Pageable pageable);
 }

@@ -83,10 +83,10 @@ public class PostService {
         ),HttpStatus.OK);
     }
 
-    public ResponseEntity<?> searchPosts(String area, String keyword, int page, int size) {
+    public ResponseEntity<?> searchPosts(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(new ResponseDto<> (true,
                 postRepositoryImpl.findAllByKeyword(
-                        area, keyword, keyword, pageable)), HttpStatus.OK);
+                        keyword, keyword, pageable)), HttpStatus.OK);
     }
 }

@@ -73,7 +73,7 @@ public class PostController {
     }
 
     @GetMapping("/api/posts/search")
-    public ResponseEntity<?> searchPosts(@RequestParam String area, @RequestParam String keyword, @RequestParam int page, @RequestParam int size) {
-        return postService.searchPosts(area, keyword, page, size);
+    public ResponseEntity<?> searchPosts(@RequestParam String keyword, @RequestParam int page, @RequestParam int size) {
+        return postService.searchPosts(keyword, page, size);
     }
 }
