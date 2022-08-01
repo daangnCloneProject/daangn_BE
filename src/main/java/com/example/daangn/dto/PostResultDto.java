@@ -36,6 +36,9 @@ public class PostResultDto {
 
     private long likeCount;
 
+    private Boolean isLiked;
+
+    //게시된 후 현재까지 지난 시간을 계산하여 return
     public String getAfter() {
         LocalDateTime now = LocalDateTime.now();
         String timestamp = "";

@@ -2,6 +2,7 @@ package com.example.daangn.controller;
 
 import com.example.daangn.dto.PostRequestDto;
 import com.example.daangn.dto.ResponseDto;
+import com.example.daangn.model.User;
 import com.example.daangn.security.UserDetailsImpl;
 import com.example.daangn.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,11 @@ public class PostController {
     }
 
     @GetMapping("/api/post/{postId}")
-    public ResponseEntity<ResponseDto<?>> readPost(@PathVariable Long postId){
-        return postService.readPost(postId);
+    public ResponseEntity<ResponseDto<?>> readPost(
+            @PathVariable Long postId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        return postService.readPost(postId,userDetails.getUser().getId());
     }
 
     @PutMapping("/api/post/{postId}")

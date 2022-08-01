@@ -98,17 +98,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-// image 폴더를 login 없이 허용
-                .antMatchers("/images/**").permitAll()
-// css 폴더를 login 없이 허용
-                .antMatchers("/css/**").permitAll()
 // 회원 관리 처리 API 전부를 login 없이 허용
-                .antMatchers(HttpMethod.GET,"/api/post/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/posts/**").permitAll()
                 .antMatchers(HttpMethod.POST ,"/api/signup").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/login").permitAll()
-                .antMatchers(HttpMethod.GET,"/").permitAll()
-
 // 그 외 어떤 요청이든 '인증'
                 .anyRequest().authenticated()
                 .and()
@@ -162,10 +154,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 회원 관리 API 허용
         skipPathList.add("POST,/api/signup");
         skipPathList.add("POST,/api/login");
-        //전체 게시글 조회
-        skipPathList.add("GET,/api/posts/**");
-        skipPathList.add("GET,/api/post/**");
-
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,

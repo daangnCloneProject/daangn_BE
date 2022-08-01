@@ -8,5 +8,5 @@ import org.springframework.http.HttpStatus;
 @Setter
 public class RestApiException {
     private String message;
-    private HttpStatus httpStatus;
+    private Boolean response;
 }

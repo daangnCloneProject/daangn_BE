@@ -1,4 +1,4 @@
-package com.example.daangn.repository;
+package com.example.daangn.repository.post;
 
 import com.example.daangn.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;

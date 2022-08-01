@@ -6,7 +6,7 @@
 //import com.example.daangn.model.Post;
 //import com.example.daangn.model.Room;
 //import com.example.daangn.model.User;
-//import com.example.daangn.repository.PostRepository;
+//import com.example.daangn.repository.post.PostRepository;
 //import com.example.daangn.repository.UserRepository;
 //import com.example.daangn.security.UserDetailsImpl;
 //import lombok.RequiredArgsConstructor;

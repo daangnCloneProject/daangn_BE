@@ -1,10 +1,11 @@
-package com.example.daangn.repository;
+package com.example.daangn.repository.post;
 
 import com.example.daangn.dto.PostResultDto;
 import com.example.daangn.model.CategoryEnum;
 import com.example.daangn.model.QLike;
 import com.example.daangn.model.QPost;
 import com.example.daangn.model.QUser;
+import com.example.daangn.repository.like.LikeRepositoryImpl;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -21,10 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepositoryCustom{
     private final JPAQueryFactory queryFactory;
-
     QPost post = QPost.post;
     QLike like = QLike.like;
-    QUser user = QUser.user;
 
     @Override
     public PostResultDto findByPostId(Long postId) {
