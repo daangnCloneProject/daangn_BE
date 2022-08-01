@@ -16,6 +16,8 @@ public class ResponseDto<T> {
     private Slice<PostResultDto> list;
     private PostResultDto post;
 
+    private Slice<Post> posts;
+
     public ResponseDto (boolean response, String message) {
         this.response = response;
         this.message = message;

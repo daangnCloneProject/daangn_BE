@@ -2,12 +2,9 @@ package com.example.daangn.controller;
 
 import com.example.daangn.dto.ResponseDto;
 import com.example.daangn.dto.SignupRequestDto;
-import com.example.daangn.security.UserDetailsImpl;
 import com.example.daangn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
