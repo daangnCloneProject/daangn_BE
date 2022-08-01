@@ -1,11 +1,10 @@
 package com.example.daangn.repository.post;
 
 import com.example.daangn.dto.PostResultDto;
+import com.example.daangn.model.AreaEnum;
 import com.example.daangn.model.CategoryEnum;
 import com.example.daangn.model.QLike;
 import com.example.daangn.model.QPost;
-import com.example.daangn.model.QUser;
-import com.example.daangn.repository.like.LikeRepositoryImpl;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -112,7 +111,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     }
 
     @Override
-    public Slice<PostResultDto> findAllByCategory(String category, Pageable pageable) {
+    public Slice<PostResultDto> findAllByCategory(String category, String area, Pageable pageable) {
         List<PostResultDto> returnPost = queryFactory.select(Projections.fields(
                         PostResultDto.class,
                         post.id,
@@ -131,7 +130,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
                         )
                 ))
                 .from(post)
-                .where(categoryEq(category))
+                .where(categoryEq(category),areaEq(area))
                 .orderBy(post.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -141,6 +140,10 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
 
     private BooleanExpression categoryEq(String category) {
         return category.equals("ALL") ? null : post.category.eq(CategoryEnum.valueOf(category));
+    }
+
+    private BooleanExpression areaEq(String area) {
+        return area.equals("ALL") ? null : post.area.eq(AreaEnum.valueOf(area));
     }
 
     private BooleanExpression postUserIdEq(String filter, Long userId) {

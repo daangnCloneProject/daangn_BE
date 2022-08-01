@@ -1,10 +1,16 @@
 package com.example.daangn.security;
 
+import com.example.daangn.model.User;
 import com.example.daangn.security.jwt.JwtTokenUtils;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,10 +31,17 @@ public class FormLoginSuccessHandler extends SavedRequestAwareAuthenticationSucc
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + " " + token);
 
         //body로도 토큰값 보내기
-//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//        response.setCharacterEncoding("UTF-8");
-//        objectMapper.writeValue(response.getWriter(),TOKEN_TYPE + " " + token);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
 
+        User user = userDetails.getUser();
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("response", true);
+        responseJson.put("token", TOKEN_TYPE + " " + token);
+        responseJson.put("userId", user.getId());
+        responseJson.put("username", user.getUsername());
+        responseJson.put("nickname", user.getNickname());
+        response.getWriter().print(responseJson);
     }
 
 }

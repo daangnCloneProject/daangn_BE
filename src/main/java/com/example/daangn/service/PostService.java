@@ -5,13 +5,10 @@ import com.example.daangn.dto.PostResultDto;
 import com.example.daangn.dto.ResponseDto;
 import com.example.daangn.model.Post;
 import com.example.daangn.model.User;
-import com.example.daangn.repository.like.LikeRepository;
 import com.example.daangn.repository.like.LikeRepositoryImpl;
 import com.example.daangn.repository.post.PostRepository;
 import com.example.daangn.repository.post.PostRepositoryImpl;
-import com.example.daangn.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -68,12 +65,11 @@ public class PostService {
         return new ResponseEntity<>(new ResponseDto<>(true, "게시글 삭제 성공"), HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDto<?>> readPosts(String category, int page, int size) {
-        System.out.println("here: " +category+", "+page+", "+size);
+    public ResponseEntity<ResponseDto<?>> readPosts(String category, String area, int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         return new ResponseEntity<>(new ResponseDto<>(
                 true,
-                postRepositoryImpl.findAllByCategory(category,pageable)
+                postRepositoryImpl.findAllByCategory(category, area, pageable)
         ), HttpStatus.OK);
     }
 

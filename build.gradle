@@ -53,6 +53,9 @@ dependencies {
 
     // spring security test
     testImplementation 'org.springframework.security:spring-security-test'
+
+    //JSON
+    implementation group: 'org.json', name: 'json', version: '20160810'
 }
 
 tasks.named('test') {
