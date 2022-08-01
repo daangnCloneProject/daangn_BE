@@ -31,8 +31,7 @@ public class FormLoginSuccessHandler extends SavedRequestAwareAuthenticationSucc
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + " " + token);
 
         //body로도 토큰값 보내기
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
 
         User user = userDetails.getUser();
         JSONObject responseJson = new JSONObject();
