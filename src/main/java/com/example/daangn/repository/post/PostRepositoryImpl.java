@@ -140,7 +140,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     }
 
     @Override
-    public Slice<PostResultDto> findAllByKeyword(String area, String titlekeyword, String contentkeyword, Pageable pageable) {
+    public Slice<PostResultDto> findAllByKeyword(String titlekeyword, String contentkeyword, Pageable pageable) {
         List<PostResultDto> returnPost = queryFactory.select(Projections.fields(
                         PostResultDto.class,
                         post.id,
@@ -159,8 +159,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
                         )
                 ))
                 .from(post)
-                .where(Objects.requireNonNull(post.area.eq(AreaEnum.valueOf(area))).and(post.title.contains(titlekeyword)).or
-                        (Objects.requireNonNull(post.area.eq(AreaEnum.valueOf(area))).and(post.content.contains(contentkeyword))))
+                .where(post.title.contains(titlekeyword).or(post.content.contains(contentkeyword)))
                 .orderBy(post.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
