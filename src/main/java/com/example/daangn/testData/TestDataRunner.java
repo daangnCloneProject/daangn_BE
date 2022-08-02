@@ -11,9 +11,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.awt.geom.Area;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -88,7 +85,7 @@ public class TestDataRunner implements ApplicationRunner {
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 3;
         List<Like> likeList = new ArrayList<>();
-        for(int i =0; i<count/2; i++){
+        for(int i =1; i<count/2; i++){
             Random random = new Random();
 
             //title 생성
