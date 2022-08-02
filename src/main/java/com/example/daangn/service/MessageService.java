@@ -1,33 +1,51 @@
-//package com.example.daangn.service;
-//
-//import com.example.daangn.dto.MessageRequestDto;
-//import com.example.daangn.dto.ResponseDto;
-//import com.example.daangn.security.UserDetailsImpl;
-//import org.springframework.http.ResponseEntity;
-//
-//import java.util.stream.Collectors;
-//
-//public class MessageService {
-//
-//    public ResponseEntity<?> getMessages(Long roomId, UserDetailsImpl userDetails) {
-//        validateRole(roomId, userDetails);
-//        return new ResponseDto<>(true, messageRepository.findTop100ByChannelIdOrderByCreatedAtDesc(roomId)
-//                .stream().map(MessageDTO::new).collect(Collectors.toList())); //TODO 참고해서 PostService 반복문 수정
-//    }
-//
-//    public MessageRequestDto createMessage(MessageRequestDto messageRequestDto, String token, Long roomId) {
-//        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//        Channel channel = validateRole(channelId, userDetails);
-//        messageRepository.save(Message.builder()
-//                .message(messageDto.getMessage())
-//                .user(userDetails.getUser())
-//                .channel(channel)
-//                .build());
-//        messageDto.setUserId(userDetails.getUser().getId());
-//        messageDto.setUsername(userDetails.getUsername());
-//        messageDto.setNickname(userDetails.getUser().getNickname());
-//        messageDto.setIconUrl(userDetails.getUser().getIconUrl());
-//        return messageDto; // template이 메세지 보내는 기능?
-//    }
-//}
+package com.example.daangn.service;
+
+import com.example.daangn.dto.MessageRequestDto;
+import com.example.daangn.dto.MessageResponseDto;
+import com.example.daangn.dto.ResponseDto;
+import com.example.daangn.model.Message;
+import com.example.daangn.model.Room;
+import com.example.daangn.repository.MessageRepository;
+import com.example.daangn.repository.RoomRepository;
+import com.example.daangn.security.UserDetailsImpl;
+import com.example.daangn.security.provider.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
+@Service
+public class MessageService {
+    private JwtTokenProvider jwtTokenProvider;
+    private final MessageRepository messageRepository;
+    private final RoomRepository roomRepository;
+
+    public ResponseEntity<?> getMessages(Long roomId, UserDetailsImpl userDetails) {
+        validateRole(roomId, userDetails);
+        return new ResponseEntity<>(messageRepository.findAllByRoomId(roomId), HttpStatus.OK);
+    }
+
+    public MessageResponseDto createMessage(MessageRequestDto messageRequestDto, String token, Long roomId) {
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        Room room = validateRole(roomId, userDetails);
+        Message message = new Message(messageRequestDto, userDetails.getUser() , room);
+        messageRepository.save(message);
+        return new MessageResponseDto(message, userDetails.getUser()); // template이 메세지 보내는 기능?
+    }
+
+    private Room validateRole(Long roomId, UserDetailsImpl userDetails) throws IllegalArgumentException {
+        Room room = roomRepository.findById(roomId).orElseThrow(() ->
+                new IllegalArgumentException("채널이 존재하지 않습니다.")
+        );
+        if (userDetails == null) {
+            throw new IllegalArgumentException("로그인이 필요합니다");
+        }
+        //공개채널일경우 검사 안함
+        return room;
+    }
+}

@@ -1,5 +1,6 @@
 package com.example.daangn.model;
 
+import com.example.daangn.dto.MessageRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,10 @@ public class Message extends TimeStamped{
 
     @Column(nullable = false)
     private String nickname;
+
+    public Message(MessageRequestDto messageRequestDto, User user, Room room) {
+        this.content = messageRequestDto.getMessage();
+        this.room = room;
+        this.nickname = user.getNickname();
+    }
 }

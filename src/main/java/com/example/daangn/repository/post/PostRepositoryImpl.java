@@ -16,6 +16,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 @RequiredArgsConstructor
@@ -138,6 +139,34 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return new SliceImpl<>(returnPost, pageable, returnPost.iterator().hasNext());
     }
 
+    @Override
+    public Slice<PostResultDto> findAllByKeyword(String titlekeyword, String contentkeyword, Pageable pageable) {
+        List<PostResultDto> returnPost = queryFactory.select(Projections.fields(
+                        PostResultDto.class,
+                        post.id,
+                        post.title,
+                        post.price,
+                        post.area,
+                        post.imageUrl,
+                        post.state,
+                        post.createdAt.as("after"),
+                        //좋아요수
+                        ExpressionUtils.as(
+                                JPAExpressions
+                                        .select(like.count())
+                                        .from(like)
+                                        .where(like.post.id.eq(post.id)),"likeCount"
+                        )
+                ))
+                .from(post)
+                .where(post.title.contains(titlekeyword).or(post.content.contains(contentkeyword)))
+                .orderBy(post.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        return new SliceImpl<>(returnPost, pageable, returnPost.iterator().hasNext());
+    }
+
     private BooleanExpression categoryEq(String category) {
         return category.equals("ALL") ? null : post.category.eq(CategoryEnum.valueOf(category));
     }
@@ -153,4 +182,5 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     private BooleanExpression likeUserIdEq(String filter, Long userId) {
         return filter.equals("interest")? like.user.id.eq(userId) : null;
     }
+
 }

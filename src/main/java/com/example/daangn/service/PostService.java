@@ -3,6 +3,7 @@ package com.example.daangn.service;
 import com.example.daangn.dto.PostRequestDto;
 import com.example.daangn.dto.PostResultDto;
 import com.example.daangn.dto.ResponseDto;
+import com.example.daangn.model.CategoryEnum;
 import com.example.daangn.model.Post;
 import com.example.daangn.model.User;
 import com.example.daangn.repository.like.LikeRepositoryImpl;
@@ -80,5 +81,12 @@ public class PostService {
                 user.getNickname(),
                 postRepositoryImpl.findAllByFilter(filter, user.getId(),pageable)
         ),HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> searchPosts(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(new ResponseDto<> (true,
+                postRepositoryImpl.findAllByKeyword(
+                        keyword, keyword, pageable)), HttpStatus.OK);
     }
 }

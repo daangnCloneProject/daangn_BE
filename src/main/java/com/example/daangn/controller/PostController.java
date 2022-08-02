@@ -2,6 +2,7 @@ package com.example.daangn.controller;
 
 import com.example.daangn.dto.PostRequestDto;
 import com.example.daangn.dto.ResponseDto;
+import com.example.daangn.model.CategoryEnum;
 import com.example.daangn.security.UserDetailsImpl;
 import com.example.daangn.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,10 @@ public class PostController {
             @RequestParam int size
     ){
         return postService.readPosts(category, area, page, size);
+    }
+
+    @GetMapping("/api/posts/search")
+    public ResponseEntity<?> searchPosts(@RequestParam String keyword, @RequestParam int page, @RequestParam int size) {
+        return postService.searchPosts(keyword, page, size);
     }
 }
