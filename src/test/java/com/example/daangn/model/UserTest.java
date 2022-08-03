@@ -1,4 +1,4 @@
-//package com.example.daangn.model.model;
+//package com.example.daangn.model;
 //
 //import com.example.daangn.dto.SignupRequestDto;
 //import com.example.daangn.repository.UserRepository;

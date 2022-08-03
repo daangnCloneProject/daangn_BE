@@ -22,7 +22,7 @@ public class LikeController {
     }
 
     @PostMapping("/api/like/{postId}")
-    public ResponseEntity<ResponseDto<?>> createLike(
+    public ResponseEntity<ResponseDto> createLike(
             @PathVariable Long postId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
@@ -31,7 +31,7 @@ public class LikeController {
     }
 
     @DeleteMapping("/api/like/{postId}")
-    public ResponseEntity<ResponseDto<?>> deleteLike(
+    public ResponseEntity<ResponseDto> deleteLike(
             @PathVariable Long postId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){

@@ -53,8 +53,9 @@ public class RoomService {
         else throw new IllegalArgumentException("구매자 혹은 판매자만 조회가 가능합니다");
     }
 
+
     @Transactional
-    public ResponseEntity<ResponseDto<?>> createRoom(RoomRequestDto roomRequestDto, UserDetailsImpl userDetails) {
+    public ResponseEntity<ResponseDto> createRoom(RoomRequestDto roomRequestDto, UserDetailsImpl userDetails) {
         Post post = postRepository.findById(roomRequestDto.getPostId())
                 .orElseThrow( () -> new IllegalArgumentException("게시글이 존재하지 않습니다"));
         User seller = post.getUser();
@@ -66,17 +67,18 @@ public class RoomService {
             return new ResponseEntity<>(new ResponseDto<>(false, "방이 이미 존재합니다", findroom.getId()), HttpStatus.BAD_REQUEST);
         Room room = new Room(post, seller, userDetails.getUser());
         roomRepository.save(room);
-        return new ResponseEntity<>(new ResponseDto<>(true, "방 생성 성공", room.getId()), HttpStatus.OK);
+        
+        return new ResponseEntity<>(new ResponseDto(true, "방 생성 성공"), HttpStatus.OK);
     }
 
-    @Transactional
-    public ResponseEntity<ResponseDto<?>> deleteRoom(Long roomId, UserDetailsImpl userDetails) {
+    @Transactoinal
+    public ResponseEntity<ResponseDto> deleteRoom(Long roomId, UserDetailsImpl userDetails) {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow( () -> new IllegalArgumentException("방이 존재하지 않습니다"));
         if((!room.getSeller().getId().equals(userDetails.getUser().getId())) && (!room.getBuyer().getId().equals(userDetails.getUser().getId()))) {
             throw new IllegalArgumentException("접근 권한이 없습니다.");
         }
         roomRepository.deleteById(roomId);
-        return new ResponseEntity<>(new ResponseDto<>(true, "삭제 성공"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto(true, "삭제 성공"), HttpStatus.OK);
     }
 }

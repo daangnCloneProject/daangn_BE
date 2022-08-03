@@ -13,4 +13,6 @@ public interface PostRepositoryCustom {
     PostResultDto findByPostId(Long postId);
 
     Slice<PostResultDto> findAllByKeyword(String titlekeyword, String contentkeyword, Pageable pageable);
+
+    Long findOneByUsername(String username);
 }

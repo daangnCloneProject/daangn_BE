@@ -16,24 +16,6 @@ public enum AreaEnum {
 
     @JsonCreator
     public static AreaEnum from(String area) {
-        area = area.toUpperCase();
-        switch (area) {
-            case "JUNGGU":
-                return AreaEnum.JUNGGU;
-            case "BUKGU":
-                return AreaEnum.BUKGU;
-            case "DONGGU":
-                return AreaEnum.DONGGU;
-            case "DALSEONGGUN":
-                return AreaEnum.DALSEONGGUN;
-            case "DALSEOGU":
-                return AreaEnum.DALSEOGU;
-            case "SEOGU":
-                return AreaEnum.SEOGU;
-            case "NAMGU":
-                return AreaEnum.NAMGU;
-            default:
-                return AreaEnum.SUSEONGGU;
-        }
+        return AreaEnum.valueOf(area.toUpperCase());
     }
 }
