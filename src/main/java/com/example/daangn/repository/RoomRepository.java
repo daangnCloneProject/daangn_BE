@@ -9,4 +9,5 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAllByBuyerOrSeller(User buyer, User seller);
     Room findByPostIdAndBuyer(Long postId, User buyer);
+    Room findByPostIdAndSeller(Long postId, User seller);
 }

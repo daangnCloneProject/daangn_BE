@@ -35,7 +35,7 @@ public class RoomController {
         return roomService.createRoom(roomRequestDto, userDetails);
     }
 
-    @DeleteMapping("/room/{roomId}")
+    @DeleteMapping("/api/room/{roomId}")
     public ResponseEntity<ResponseDto> deleteRoom(@PathVariable Long roomId,
                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return roomService.deleteRoom(roomId, userDetails);

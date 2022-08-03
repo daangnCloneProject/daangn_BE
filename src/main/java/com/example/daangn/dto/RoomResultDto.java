@@ -16,7 +16,7 @@ public class RoomResultDto {
     private Long buyerId;
     private String buyerNickname;
     private Long postId;
-    private List<MessageResponseDto> messageResponseDtoList;
+    private List<MessageResponseDto> messageList;
 
     public RoomResultDto(Room room) {
         this.id = room.getId();
@@ -34,7 +34,7 @@ public class RoomResultDto {
         this.buyerId = room.getBuyer().getId();
         this.buyerNickname = room.getBuyer().getNickname();
         this.postId = room.getPost().getId();
-        this.messageResponseDtoList = messageResponseDtoList;
+        this.messageList = messageResponseDtoList;
     }
 
 }

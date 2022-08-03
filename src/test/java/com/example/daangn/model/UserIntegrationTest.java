@@ -1,27 +1,27 @@
-package com.example.daangn.model;
+//package com.example.daangn.model;
+//
+//import com.example.daangn.service.UserService;
+//import org.junit.jupiter.api.*;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.example.daangn.service.UserService;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserIntegrationTest {
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    Long userId = null;
-    Post createdPost = null;
-    int updatedMyPrice = -1;
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+//public class UserIntegrationTest {
+//    @Autowired
+//    UserService userService;
+//
+//    @Autowired
+//    PasswordEncoder passwordEncoder;
+//
+//    Long userId = null;
+//    Post createdPost = null;
+//    int updatedMyPrice = -1;
 
 //    @Test
 //    @Order(1)
@@ -47,4 +47,4 @@ public class UserIntegrationTest {
 //        // then
 //        assertEquals("회원 Id 가 유효하지 않습니다.", exception.getMessage());
 //    }
-}
+//}
