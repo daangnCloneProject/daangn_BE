@@ -2,14 +2,16 @@ package com.example.daangn.dto;
 
 import com.example.daangn.model.Post;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Slice;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL) //null인 데이터는 json 결과에 나오지 않음
-public class ResponseDto<T> {
+public class ResponseDto {
     private boolean response;
     private String message;
     private String nickname;

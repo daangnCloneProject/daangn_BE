@@ -20,7 +20,7 @@ public class UserController {
 
 
     @PostMapping("/api/signup")
-    public ResponseEntity<ResponseDto<?>> registerUser(@RequestBody SignupRequestDto signupRequestDto){
+    public ResponseEntity<ResponseDto> registerUser(@RequestBody SignupRequestDto signupRequestDto){
         return userService.registerUser(signupRequestDto);
     }
 

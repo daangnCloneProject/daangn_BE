@@ -16,7 +16,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import java.util.Objects;
 
 @Repository
 @RequiredArgsConstructor
@@ -165,6 +164,14 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
                 .limit(pageable.getPageSize())
                 .fetch();
         return new SliceImpl<>(returnPost, pageable, returnPost.iterator().hasNext());
+    }
+
+    @Override
+    public Long findOneByUsername(String username) {
+        return queryFactory.select(post.id)
+                .from(post)
+                .where(post.user.username.eq(username))
+                .fetchFirst();
     }
 
     private BooleanExpression categoryEq(String category) {

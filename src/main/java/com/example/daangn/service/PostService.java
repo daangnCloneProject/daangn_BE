@@ -3,7 +3,6 @@ package com.example.daangn.service;
 import com.example.daangn.dto.PostRequestDto;
 import com.example.daangn.dto.PostResultDto;
 import com.example.daangn.dto.ResponseDto;
-import com.example.daangn.model.CategoryEnum;
 import com.example.daangn.model.Post;
 import com.example.daangn.model.User;
 import com.example.daangn.repository.like.LikeRepositoryImpl;
@@ -26,25 +25,25 @@ public class PostService {
 
 
     @Transactional
-    public ResponseEntity<ResponseDto<?>> createPost(PostRequestDto requestDto, User user) {
+    public ResponseEntity<ResponseDto> createPost(PostRequestDto requestDto, User user) {
         Post post = new Post(requestDto, user);
         postRepository.save(post);
-        return new ResponseEntity<>(new ResponseDto<>(true, "게시글 생성 성공"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto(true, "게시글 생성 성공"), HttpStatus.OK);
     }
 
 
-    public ResponseEntity<ResponseDto<?>> readPost(Long postId, Long userId) {
+    public ResponseEntity<ResponseDto> readPost(Long postId, Long userId) {
         PostResultDto postResultDto = postRepositoryImpl.findByPostId(postId);
         postResultDto.setIsLiked(likeRepository.findByPostIdAndUserId(postId, userId) != null);
 
-        return new ResponseEntity<>(new ResponseDto<>(
+        return new ResponseEntity<>(new ResponseDto(
                 true,
                 postResultDto
         ), HttpStatus.OK);
     }
 
     @Transactional
-    public ResponseEntity<ResponseDto<?>> editPost(Long postId, User user, PostRequestDto requestDto) {
+    public ResponseEntity<ResponseDto> editPost(Long postId, User user, PostRequestDto requestDto) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 포스트입니다."));
         if(!user.getId().equals(post.getUser().getId())){
@@ -52,31 +51,31 @@ public class PostService {
         }
         post.updatePost(requestDto);
         postRepository.save(post);
-        return new ResponseEntity<>(new ResponseDto<>(true, "게시글 수정 성공"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto(true, "게시글 수정 성공"), HttpStatus.OK);
     }
 
     @Transactional
-    public ResponseEntity<ResponseDto<?>> deletePost(Long postId, User user) {
+    public ResponseEntity<ResponseDto> deletePost(Long postId, User user) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 포스트입니다."));
         if(!user.getId().equals(post.getUser().getId())){
             throw new IllegalArgumentException("접근 권한이 없는 사용자입니다.");
         }
         postRepository.deleteById(postId);
-        return new ResponseEntity<>(new ResponseDto<>(true, "게시글 삭제 성공"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto(true, "게시글 삭제 성공"), HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDto<?>> readPosts(String category, String area, int page, int size) {
+    public ResponseEntity<ResponseDto> readPosts(String category, String area, int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
-        return new ResponseEntity<>(new ResponseDto<>(
+        return new ResponseEntity<>(new ResponseDto(
                 true,
                 postRepositoryImpl.findAllByCategory(category, area, pageable)
         ), HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDto<?>> readMyPosts(String filter, User user, int page, int size) {
+    public ResponseEntity<ResponseDto> readMyPosts(String filter, User user, int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
-        return new ResponseEntity<>(new ResponseDto<>(
+        return new ResponseEntity<>(new ResponseDto(
                 true,
                 user.getNickname(),
                 postRepositoryImpl.findAllByFilter(filter, user.getId(),pageable)
@@ -85,7 +84,7 @@ public class PostService {
 
     public ResponseEntity<?> searchPosts(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>(new ResponseDto<> (true,
+        return new ResponseEntity<>(new ResponseDto (true,
                 postRepositoryImpl.findAllByKeyword(
                         keyword, keyword, pageable)), HttpStatus.OK);
     }

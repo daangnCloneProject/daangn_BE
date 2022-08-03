@@ -33,7 +33,7 @@ public class UserService {
     }
 
     //회원가
-    public ResponseEntity<ResponseDto<?>> registerUser(SignupRequestDto signupRequestDto) {
+    public ResponseEntity<ResponseDto> registerUser(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
         String nickname = signupRequestDto.getNickname();
         String password = signupRequestDto.getPassword();
@@ -54,7 +54,7 @@ public class UserService {
         User user = new User(nickname,username,passwordEncoder.encode(password));
 
         userRepository.save(user);
-        return new ResponseEntity<>(new ResponseDto<>(true, "회원가입 성공"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto(true, "회원가입 성공"), HttpStatus.OK);
 
     }
 //    유저 목록

@@ -29,14 +29,14 @@ public class RoomController {
     }
 
     @PostMapping("/api/room")
-    public ResponseEntity<ResponseDto<?>> createRoom(@RequestBody RoomRequestDto roomRequestDto,
+    public ResponseEntity<ResponseDto> createRoom(@RequestBody RoomRequestDto roomRequestDto,
                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         return roomService.createRoom(roomRequestDto, userDetails);
     }
 
     @DeleteMapping("/room/{roomId}")
-    public ResponseEntity<ResponseDto<?>> deleteRoom(@PathVariable Long roomId,
+    public ResponseEntity<ResponseDto> deleteRoom(@PathVariable Long roomId,
                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return roomService.deleteRoom(roomId, userDetails);
     }

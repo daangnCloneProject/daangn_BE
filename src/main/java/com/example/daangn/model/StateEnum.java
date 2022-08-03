@@ -11,14 +11,6 @@ public enum StateEnum {
 
     @JsonCreator
     public static StateEnum from(String state) {
-        state = state.toUpperCase();
-        switch (state) {
-            case "RESERVED":
-                return StateEnum.RESERVED;
-            case "DONE":
-                return StateEnum.DONE;
-            default:
-                return StateEnum.SALE;
-        }
+        return StateEnum.valueOf(state.toUpperCase());
     }
 }
