@@ -4,6 +4,7 @@ import com.example.daangn.dto.MessageRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -26,9 +27,19 @@ public class Message extends TimeStamped{
     @Column(nullable = false)
     private String nickname;
 
-    public Message(MessageRequestDto messageRequestDto, User user, Room room) {
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", room=" + room +
+                ", nickname='" + nickname + '\'' +
+                '}';
+    }
+
+    public Message(MessageRequestDto messageRequestDto, Room room) {
         this.content = messageRequestDto.getMessage();
         this.room = room;
-        this.nickname = user.getNickname();
+        this.nickname = messageRequestDto.getNickname();
     }
 }

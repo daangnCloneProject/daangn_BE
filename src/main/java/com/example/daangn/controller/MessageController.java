@@ -29,10 +29,9 @@ public class MessageController {
     }
 
     @MessageMapping("/message/{roomId}")
-    public ResponseEntity<?> createMessage(MessageRequestDto messageRequestDto,
-                                           @Header("Authorization") String token, @DestinationVariable Long roomId) {
-        MessageResponseDto messageResponseDto = messageService.createMessage(messageRequestDto, token, roomId);
-        template.convertAndSend("/sub/channel/" + roomId, messageRequestDto);
+    public ResponseEntity<?> createMessage(MessageRequestDto messageRequestDto, @DestinationVariable Long roomId) {
+        MessageResponseDto messageResponseDto = messageService.createMessage(messageRequestDto, roomId);
+        template.convertAndSend("/sub/room/" + roomId, messageResponseDto);
         return new ResponseEntity<>(messageResponseDto, HttpStatus.OK);
     }
 
