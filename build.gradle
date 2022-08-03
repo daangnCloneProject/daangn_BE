@@ -59,6 +59,9 @@ dependencies {
     //JSON
     implementation group: 'org.json', name: 'json', version: '20160810'
 
+    //Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    
     // 테스트 코드를 위한 Lombok 라이브러리
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'

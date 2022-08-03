@@ -101,6 +101,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 // 회원 관리 처리 API 전부를 login 없이 허용
                 .antMatchers(HttpMethod.POST ,"/api/signup").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/login").permitAll()
+                .antMatchers("/socket").permitAll()
+                .antMatchers("/socket/**").permitAll()
 // 그 외 어떤 요청이든 '인증'
                 .anyRequest().authenticated()
                 .and()
@@ -154,6 +156,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 회원 관리 API 허용
         skipPathList.add("POST,/api/signup");
         skipPathList.add("POST,/api/login");
+        skipPathList.add("GET,/socket");
+        skipPathList.add("GET,/socket/**");
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
                 skipPathList,
@@ -180,6 +184,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);

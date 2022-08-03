@@ -13,9 +13,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,7 +32,8 @@ public class MessageController {
     public ResponseEntity<?> createMessage(MessageRequestDto messageRequestDto,
                                            @Header("Authorization") String token, @DestinationVariable Long roomId) {
         MessageResponseDto messageResponseDto = messageService.createMessage(messageRequestDto, token, roomId);
-        template.convertAndSend("/sub/channel/" + roomId, messageResponseDto);
+        template.convertAndSend("/sub/channel/" + roomId, messageRequestDto);
         return new ResponseEntity<>(messageResponseDto, HttpStatus.OK);
     }
+
 }
