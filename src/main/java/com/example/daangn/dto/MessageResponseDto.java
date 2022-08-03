@@ -12,7 +12,7 @@ public class MessageResponseDto {
     private String nickname;
     private String message;
 
-    public MessageResponseDto(Message message, User user) {
+    public MessageResponseDto(Message message) {
         this.createdAt = message.getCreatedAt();
         this.nickname = message.getNickname();
         this.message = message.getContent();

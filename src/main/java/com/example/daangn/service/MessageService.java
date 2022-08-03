@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -29,13 +30,14 @@ public class MessageService {
         return new ResponseEntity<>(messageRepository.findAllByRoomId(roomId), HttpStatus.OK);
     }
 
+    @Transactional
     public MessageResponseDto createMessage(MessageRequestDto messageRequestDto, String token, Long roomId) {
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         Room room = validateRole(roomId, userDetails);
         Message message = new Message(messageRequestDto, userDetails.getUser() , room);
         messageRepository.save(message);
-        return new MessageResponseDto(message, userDetails.getUser()); // template이 메세지 보내는 기능?
+        return new MessageResponseDto(message);
     }
 
     private Room validateRole(Long roomId, UserDetailsImpl userDetails) throws IllegalArgumentException {
@@ -45,7 +47,7 @@ public class MessageService {
         if (userDetails == null) {
             throw new IllegalArgumentException("로그인이 필요합니다");
         }
-        //공개채널일경우 검사 안함
         return room;
     }
+
 }

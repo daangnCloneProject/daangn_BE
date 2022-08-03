@@ -23,9 +23,9 @@ public class RoomController {
         return roomService.getRooms(userDetails);
     }
 
-    @GetMapping("/api/room/{roomId}") //게시글 id가 필요없나?
-    public ResponseEntity<?> getRoom(@PathVariable Long roomId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return roomService.getRoom(roomId, userDetails);
+    @GetMapping("/api/room/{postId}")
+    public ResponseEntity<?> getRoomDetails(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return roomService.getRoomDetails(postId, userDetails);
     }
 
     @PostMapping("/api/room")

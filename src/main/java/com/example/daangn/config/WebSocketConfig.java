@@ -1,6 +1,6 @@
 package com.example.daangn.config;
 
-import com.example.daangn.exception.StompHandler;
+import com.example.daangn.socket.StompHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -34,6 +34,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration){
+        // StompHandler 가 Websocket 앞단에서 token 을 체크할 수 있도록 인터셉터로 설정
         registration.interceptors(stompHandler);
     }
 }

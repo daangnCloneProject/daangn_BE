@@ -17,6 +17,7 @@ public class ResponseDto<T> {
     private PostResultDto post;
 
     private Slice<Post> posts;
+    private Long roomId;
 
     public ResponseDto (boolean response, String message) {
         this.response = response;
@@ -37,5 +38,11 @@ public class ResponseDto<T> {
     public ResponseDto(boolean response, Slice<PostResultDto> postResultDtoSlice) {
         this.response = response;
         this.list = postResultDtoSlice;
+    }
+
+    public ResponseDto(boolean response, String message, Long roomId) {
+        this.response = response;
+        this.message = message;
+        this.roomId = roomId;
     }
 }

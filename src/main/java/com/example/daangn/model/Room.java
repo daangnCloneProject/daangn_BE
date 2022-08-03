@@ -28,8 +28,8 @@ public class Room {
     @JoinColumn(name = "POST_ID", nullable = false)
     private Post post;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
-    private List<Message> messageList;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Message> messageList;
 
     public Room(Post post, User seller , User user){
         this.post = post;
