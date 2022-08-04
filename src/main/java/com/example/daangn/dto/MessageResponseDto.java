@@ -1,12 +1,13 @@
 package com.example.daangn.dto;
 
 import com.example.daangn.model.Message;
-import com.example.daangn.model.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class MessageResponseDto {
     private LocalDateTime createdAt;
     private String nickname;
@@ -15,6 +16,6 @@ public class MessageResponseDto {
     public MessageResponseDto(Message message) {
         this.createdAt = message.getCreatedAt();
         this.nickname = message.getNickname();
-        this.message = message.getContent();
+        this.message = message.getMessage();
     }
 }

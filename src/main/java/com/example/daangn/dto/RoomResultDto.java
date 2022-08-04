@@ -1,8 +1,6 @@
 package com.example.daangn.dto;
 
-import com.example.daangn.model.Message;
 import com.example.daangn.model.Room;
-import com.example.daangn.model.User;
 import lombok.Getter;
 
 import java.util.List;

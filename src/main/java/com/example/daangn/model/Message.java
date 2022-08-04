@@ -18,7 +18,7 @@ public class Message extends TimeStamped{
     private Long id;
 
     @Column(nullable = false)
-    private String content;
+    private String message;
 
     @ManyToOne
     @JoinColumn(name = "ROOM_ID", nullable = false)
@@ -28,7 +28,7 @@ public class Message extends TimeStamped{
     private String nickname;
 
     public Message(MessageRequestDto messageRequestDto, Room room) {
-        this.content = messageRequestDto.getMessage();
+        this.message = messageRequestDto.getMessage();
         this.room = room;
         this.nickname = messageRequestDto.getNickname();
     }

@@ -6,13 +6,10 @@ import com.example.daangn.model.Message;
 import com.example.daangn.model.Room;
 import com.example.daangn.repository.MessageRepository;
 import com.example.daangn.repository.RoomRepository;
-import com.example.daangn.security.UserDetailsImpl;
-import com.example.daangn.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,13 +19,7 @@ public class MessageService {
     private final RoomRepository roomRepository;
 
     public List<MessageResponseDto> getMessages(Long roomId) {
-        List<Message> messages = messageRepository.findAllByRoomId(roomId);
-        List<MessageResponseDto> messageResponseDtoList = new ArrayList<>();
-        for(Message message : messages){
-            MessageResponseDto messageResponseDto = new MessageResponseDto(message);
-            messageResponseDtoList.add(messageResponseDto);
-        }
-        return messageResponseDtoList;
+        return messageRepository.findAllByRoomId(roomId);
     }
 
     @Transactional
