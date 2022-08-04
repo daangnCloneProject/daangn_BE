@@ -57,10 +57,4 @@ public class UserService {
         return new ResponseEntity<>(new ResponseDto(true, "회원가입 성공"), HttpStatus.OK);
 
     }
-//    유저 목록
-//    public Authentication getAuthentication(String username) {
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-//    }
-
 }

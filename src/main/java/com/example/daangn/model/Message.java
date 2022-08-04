@@ -27,16 +27,6 @@ public class Message extends TimeStamped{
     @Column(nullable = false)
     private String nickname;
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", room=" + room +
-                ", nickname='" + nickname + '\'' +
-                '}';
-    }
-
     public Message(MessageRequestDto messageRequestDto, Room room) {
         this.content = messageRequestDto.getMessage();
         this.room = room;

@@ -23,15 +23,4 @@ public class UserController {
     public ResponseEntity<ResponseDto> registerUser(@RequestBody SignupRequestDto signupRequestDto){
         return userService.registerUser(signupRequestDto);
     }
-
-    //닉네임 보이기
-//    @GetMapping("/api/auth")
-//    public AuthResponseDto getAuth(@AuthenticationPrincipal UserDetailsImpl userDetails){
-//        String nickname = userDetails.getUser().getNickname();
-//
-//        AuthResponseDto authResponseDto = new AuthResponseDto(nickname);
-//        return authResponseDto;
-//    }
-
-
 }

@@ -29,7 +29,7 @@ public class RoomService {
     private final MessageRepository messageRepository;
     private final RoomRepository roomRepository;
 
-    public ResponseEntity<?> getRooms(UserDetailsImpl userDetails) {
+    public ResponseEntity<List<RoomResultDto>> getRooms(UserDetailsImpl userDetails) {
         List<Room> roomList = roomRepository.findAllByBuyerOrSeller(userDetails.getUser(), userDetails.getUser());
         List<RoomResultDto> roomResultDtoList = new ArrayList<>();
         for (Room room : roomList){
@@ -39,7 +39,7 @@ public class RoomService {
         return new ResponseEntity<>(roomResultDtoList, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getRoomDetails(Long postId, UserDetailsImpl userDetails) {
+    public ResponseEntity<RoomResultDto> getRoomDetails(Long postId, UserDetailsImpl userDetails) {
         Room room = roomRepository.findByPostIdAndBuyer(postId, userDetails.getUser());
         if(room == null) {
             room = roomRepository.findByPostIdAndSeller(postId, userDetails.getUser());

@@ -3,6 +3,7 @@ package com.example.daangn.controller;
 
 import com.example.daangn.dto.ResponseDto;
 import com.example.daangn.dto.RoomRequestDto;
+import com.example.daangn.dto.RoomResultDto;
 import com.example.daangn.model.User;
 import com.example.daangn.security.UserDetailsImpl;
 import com.example.daangn.service.RoomService;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class RoomController {
@@ -18,13 +21,13 @@ public class RoomController {
     private final RoomService roomService;
 
     @GetMapping("/api/myrooms")
-    public ResponseEntity<?> getRooms(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<List<RoomResultDto>> getRooms(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         return roomService.getRooms(userDetails);
     }
 
     @GetMapping("/api/room/{postId}")
-    public ResponseEntity<?> getRoomDetails(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<RoomResultDto> getRoomDetails(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return roomService.getRoomDetails(postId, userDetails);
     }
 

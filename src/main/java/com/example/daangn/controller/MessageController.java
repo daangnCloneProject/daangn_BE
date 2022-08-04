@@ -15,6 +15,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class MessageController {
@@ -23,13 +25,13 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping("/api/message/{roomId}")
-    public ResponseEntity<?> getMessages(@PathVariable Long roomId,
-                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<List<MessageResponseDto>> getMessages(@PathVariable Long roomId,
+                                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return new ResponseEntity<>(messageService.getMessages(roomId, userDetails), HttpStatus.OK);
     }
 
     @MessageMapping("/message/{roomId}")
-    public ResponseEntity<?> createMessage(MessageRequestDto messageRequestDto, @DestinationVariable Long roomId) {
+    public ResponseEntity<MessageResponseDto> createMessage(MessageRequestDto messageRequestDto, @DestinationVariable Long roomId) {
         MessageResponseDto messageResponseDto = messageService.createMessage(messageRequestDto, roomId);
         template.convertAndSend("/sub/room/" + roomId, messageResponseDto);
         return new ResponseEntity<>(messageResponseDto, HttpStatus.OK);

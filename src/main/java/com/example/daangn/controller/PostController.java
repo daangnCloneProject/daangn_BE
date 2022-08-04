@@ -52,7 +52,7 @@ public class PostController {
     }
 
     @GetMapping("/api/mypost")
-    public ResponseEntity<?> getMyPosts(
+    public ResponseEntity<ResponseDto> getMyPosts(
             @RequestParam String filter,
             @RequestParam int page,
             @RequestParam int size,
@@ -72,7 +72,7 @@ public class PostController {
     }
 
     @GetMapping("/api/posts/search")
-    public ResponseEntity<?> searchPosts(@RequestParam String keyword, @RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<ResponseDto> searchPosts(@RequestParam String keyword, @RequestParam int page, @RequestParam int size) {
         return postService.searchPosts(keyword, page, size);
     }
 }
