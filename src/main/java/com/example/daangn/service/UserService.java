@@ -6,6 +6,7 @@ import com.example.daangn.dto.SignupRequestDto;
 import com.example.daangn.model.User;
 import com.example.daangn.repository.UserRepository;
 import com.example.daangn.security.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,20 +18,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    private final UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
-
-    }
 
     //회원가
     public ResponseEntity<ResponseDto> registerUser(SignupRequestDto signupRequestDto) {
@@ -55,6 +47,6 @@ public class UserService {
 
         userRepository.save(user);
         return new ResponseEntity<>(new ResponseDto(true, "회원가입 성공"), HttpStatus.OK);
-
     }
+
 }

@@ -22,19 +22,18 @@ public class RoomController {
 
     @GetMapping("/api/myrooms")
     public ResponseEntity<List<RoomResultDto>> getRooms(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        User user = userDetails.getUser();
         return roomService.getRooms(userDetails);
     }
 
     @GetMapping("/api/room/{postId}")
-    public ResponseEntity<RoomResultDto> getRoomDetails(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<RoomResultDto> getRoomDetails(@PathVariable Long postId,
+                                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return roomService.getRoomDetails(postId, userDetails);
     }
 
     @PostMapping("/api/room")
     public ResponseEntity<ResponseDto> createRoom(@RequestBody RoomRequestDto roomRequestDto,
                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        User user = userDetails.getUser();
         return roomService.createRoom(roomRequestDto, userDetails);
     }
 
