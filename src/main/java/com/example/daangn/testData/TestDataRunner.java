@@ -84,7 +84,6 @@ public class TestDataRunner implements ApplicationRunner {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 3;
-        List<Like> likeList = new ArrayList<>();
         for(int i =1; i<count/2; i++){
             Random random = new Random();
 
@@ -122,7 +121,7 @@ public class TestDataRunner implements ApplicationRunner {
             StateEnum state = getStateEnum(stateNumber);
 
             User user = testUser1;
-            Post post = new Post((long)i,title,category,price,area,content,imageUrl,state,user,likeList);
+            Post post = new Post((long)i,title,category,price,area,content,imageUrl,state,user);
             postRepository.save(post);
         }
         for(int j=count/2; j<count; j++){
@@ -162,7 +161,7 @@ public class TestDataRunner implements ApplicationRunner {
             StateEnum state = getStateEnum(stateNumber);
 
             User user = testUser2;
-            Post post = new Post((long)j,title,category,price,area,content,imageUrl,state,user,likeList);
+            Post post = new Post((long)j,title,category,price,area,content,imageUrl,state,user);
             postRepository.save(post);
         }
 

@@ -48,6 +48,9 @@ public class Post extends TimeStamped{
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "post")
     private List<Like> likeList;
 
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "post")
+    private List<Room> roomList;
+
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.category = requestDto.getCategory();
@@ -58,8 +61,21 @@ public class Post extends TimeStamped{
         this.state = StateEnum.from("SALE");
         this.user = user;
         this.likeList = new ArrayList<>();
+        this.roomList = new ArrayList<>();
     }
-
+    public Post(Long id, String title, CategoryEnum category, int price, AreaEnum area, String content, String imageUrl, StateEnum state, User user) {
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.price = price;
+        this.area = area;
+        this.content = content;
+        this.imageUrl = imageUrl;
+        this.state = state;
+        this.user = user;
+        this.likeList = new ArrayList<>();
+        this.roomList = new ArrayList<>();
+    }
     public void updatePost(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.category = requestDto.getCategory();
