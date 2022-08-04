@@ -18,12 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class MessageService {
-    private JwtTokenProvider jwtTokenProvider;
     private final MessageRepository messageRepository;
     private final RoomRepository roomRepository;
 
-    public List<MessageResponseDto> getMessages(Long roomId, UserDetailsImpl userDetails) {
-//        validateRole(roomId, userDetails);
+    public List<MessageResponseDto> getMessages(Long roomId) {
         List<Message> messages = messageRepository.findAllByRoomId(roomId);
         List<MessageResponseDto> messageResponseDtoList = new ArrayList<>();
         for(Message message : messages){
@@ -34,26 +32,12 @@ public class MessageService {
     }
 
     @Transactional
-    public MessageResponseDto createMessage(MessageRequestDto messageRequestDto/*, String token*/, Long roomId) {
-//        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//        Room room = validateRole(roomId, );
+    public MessageResponseDto createMessage(MessageRequestDto messageRequestDto, Long roomId) {
         Room room = roomRepository.findById(roomId)
-                .orElseThrow( () -> new IllegalArgumentException("없어요"));
+                .orElseThrow( () -> new IllegalArgumentException("방이 존재하지 않습니다."));
         Message message = new Message(messageRequestDto, room);
-        System.out.println(message.toString());
         messageRepository.save(message);
         return new MessageResponseDto(message);
     }
-
-//    private Room validateRole(Long roomId, UserDetailsImpl userDetails) throws IllegalArgumentException {
-//        Room room = roomRepository.findById(roomId).orElseThrow(() ->
-//                new IllegalArgumentException("채널이 존재하지 않습니다.")
-//        );
-//        if (userDetails == null) {
-//            throw new IllegalArgumentException("로그인이 필요합니다");
-//        }
-//        return room;
-//    }
 
 }

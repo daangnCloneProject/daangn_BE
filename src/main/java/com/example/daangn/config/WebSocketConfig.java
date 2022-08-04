@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setAllowedOrigins("http://127.0.0.1:8080")
                 .setAllowedOrigins("http://localhost:3000")
                 .setAllowedOrigins("http://127.0.0.1:3000")
-                .setAllowedOriginPatterns("*")
+                .setAllowedOrigins("http://dryblack.shop.s3-website.ap-northeast-2.amazonaws.com")
                 .withSockJS(); //소켓 지원하지 않는 브라우저는 sockJS 사용하도록 설정.
     }
 

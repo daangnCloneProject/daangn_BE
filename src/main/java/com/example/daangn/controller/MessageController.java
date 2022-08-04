@@ -25,9 +25,8 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping("/api/message/{roomId}")
-    public ResponseEntity<List<MessageResponseDto>> getMessages(@PathVariable Long roomId,
-                                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return new ResponseEntity<>(messageService.getMessages(roomId, userDetails), HttpStatus.OK);
+    public ResponseEntity<List<MessageResponseDto>> getMessages(@PathVariable Long roomId) {
+        return new ResponseEntity<>(messageService.getMessages(roomId), HttpStatus.OK);
     }
 
     @MessageMapping("/message/{roomId}")
