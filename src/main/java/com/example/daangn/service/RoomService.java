@@ -5,7 +5,6 @@ import com.example.daangn.dto.MessageResponseDto;
 import com.example.daangn.dto.ResponseDto;
 import com.example.daangn.dto.RoomRequestDto;
 import com.example.daangn.dto.RoomResultDto;
-import com.example.daangn.model.Message;
 import com.example.daangn.model.Post;
 import com.example.daangn.model.Room;
 import com.example.daangn.model.User;
@@ -44,12 +43,7 @@ public class RoomService {
         if(room == null) {
             room = roomRepository.findByPostIdAndSeller(postId, userDetails.getUser());
         }
-        List<Message> messageList = messageRepository.findAllByRoomId(room.getId());
-        List<MessageResponseDto> messageResponseDtoList = new ArrayList<>();
-        for (Message message : messageList){
-            MessageResponseDto messageResponseDto = new MessageResponseDto(message);
-            messageResponseDtoList.add(messageResponseDto);
-        }
+        List<MessageResponseDto> messageResponseDtoList = messageRepository.findAllByRoomId(room.getId());
         if(room!=null)
             return new ResponseEntity<>(new RoomResultDto(room, messageResponseDtoList), HttpStatus.OK);
         else throw new IllegalArgumentException("구매자 혹은 판매자만 조회가 가능합니다");
@@ -77,7 +71,6 @@ public class RoomService {
     public ResponseEntity<ResponseDto> deleteRoom(Long roomId, UserDetailsImpl userDetails) {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow( () -> new IllegalArgumentException("방이 존재하지 않습니다"));
-        messageRepository.deleteAllByRoomId(roomId);
         if((!room.getSeller().getId().equals(userDetails.getUser().getId())) && (!room.getBuyer().getId().equals(userDetails.getUser().getId()))) {
             throw new IllegalArgumentException("접근 권한이 없습니다.");
         }

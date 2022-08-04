@@ -4,7 +4,6 @@ package com.example.daangn.controller;
 import com.example.daangn.dto.ResponseDto;
 import com.example.daangn.dto.RoomRequestDto;
 import com.example.daangn.dto.RoomResultDto;
-import com.example.daangn.model.User;
 import com.example.daangn.security.UserDetailsImpl;
 import com.example.daangn.service.RoomService;
 import lombok.RequiredArgsConstructor;
